@@ -13,7 +13,7 @@ defmodule IslandsEngine.GameSupervisor do
 
   def stop_game(name) do
     case pid_from_name(name) do
-      pid when is_pid(pid) -> DynamicSupervisor.terminate_child(__MODULE__, pid)
+      pid when is_pid(pid) -> terminate_game(pid, name)
       nil -> {:error, :not_found}
     end
   end
@@ -22,5 +22,10 @@ defmodule IslandsEngine.GameSupervisor do
     name
     |> Game.via_tuple
     |> GenServer.whereis
+  end
+
+  defp terminate_game(pid, name) do
+    :ets.delete(:game_state, name)
+    DynamicSupervisor.terminate_child(__MODULE__, pid)
   end
 end
