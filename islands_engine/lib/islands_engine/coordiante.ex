@@ -5,6 +5,8 @@ defmodule IslandsEngine.Coordinate do
 
   @enforce_keys [:row, :col]
 
+  @derive Jason.Encoder
+
   defstruct [:row, :col]
 
   def new(row, col) when row in(@board_range) and col in (@board_range), do: {:ok, %Coordinate{row: row, col: col}}

@@ -3,6 +3,8 @@ defmodule IslandsEngine.Island do
 
   @enforce_keys [:coordinates, :hit_coordinates]
 
+  @derive Jason.Encoder
+
   defstruct [:coordinates, :hit_coordinates]
 
   def new(type, %Coordinate{} = upper_left) do
