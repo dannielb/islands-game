@@ -64,7 +64,7 @@ const new_channel = (subtopic, screen_name) => {
   return socket.channel("game:" + subtopic, {screen_name})
 }
 
-const game_channel = new_channel('daniel', 'daniel')
+const game_channel = new_channel('daniel', 'daniel3')
 
 function join(channel) {
   channel.join()
@@ -76,15 +76,17 @@ function join(channel) {
     })
 }
 
-function leave(channel) {
-  channel.leave()
-    .receive("ok", response => {
-      console.log("Left successfully", response)
-    })
-    .receive("error", response => {
-      console.log("Unable to leave", response)
-    })
-}
+join(game_channel)
+
+// function leave(channel) {
+//   channel.leave()
+//     .receive("ok", response => {
+//       console.log("Left successfully", response)
+//     })
+//     .receive("error", response => {
+//       console.log("Unable to leave", response)
+//     })
+// }
 
 function new_game(channel) {
   channel.push("new_game", {})
@@ -164,6 +166,10 @@ game_channel.on("player_guessed_coordinate", response => {
 
 guess_coordinate(game_channel, "player1", 1,1)
 guess_coordinate(game_channel, "player2", 1, 5)
+
+game_channel.on("subscribers", response => {
+  console.log("These players have joined: ", response)
+})
 
 */
 export default socket
